@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>腾讯游戏测试岗 · 知识中枢 | Tencent Game Test Knowledge Hub</title>
+  <meta name="description" content="腾讯游戏测试岗全栈知识库：容灾测试、混沌工程、服务器架构、网络协议、数据库、性能测试、安全测试等" />
+
+  <!-- Google Fonts: Russo One + Chakra Petch + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- 主样式 -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body class="theme-dark">
+  <!-- 背景层 -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="bg-particles" id="particles"></div>
+
+  <!-- 顶部导航 -->
+  <nav class="top-nav" id="topNav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">GAME<span class="accent">TEST</span>.HUB</div>
+          <div class="brand-sub">腾讯游戏测试 · 知识中枢 v2.0</div>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">
+          <span class="nav-link-num">01</span>
+          <span>首页</span>
+        </a>
+        <a href="catalog.html" class="nav-link">
+          <span class="nav-link-num">02</span>
+          <span>知识图谱</span>
+        </a>
+        <a href="database.html" class="nav-link">
+          <span class="nav-link-num">03</span>
+          <span>数据库</span>
+        </a>
+        <a href="search.html" class="nav-link">
+          <span class="nav-link-num">04</span>
+          <span>搜索</span>
+        </a>
+        <a href="dashboard.html" class="nav-link">
+          <span class="nav-link-num">05</span>
+          <span>数据仪表盘</span>
+        </a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="searchBtn" title="搜索 (Ctrl+K)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="themeBtn" title="切换主题">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero 区 -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-glow hero-glow-1"></div>
+      <div class="hero-glow hero-glow-2"></div>
+      <div class="hero-grid-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>面向腾讯互娱 · 游戏测试工程师</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="hero-title-line">游戏测试工程师</span>
+        <span class="hero-title-line hero-title-accent">全栈知识中枢</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        容灾测试 · 混沌工程 · 服务器架构 · 网络协议 · 数据库 · 性能测试 · 安全测试 · CI/CD
+        <br>
+        <span class="hero-subtitle-en">Tencent Game Test Engineering · Full-Stack Knowledge Base</span>
+      </p>
+
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-num" data-target="19">0</div>
+          <div class="stat-label">核心知识点</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" data-target="12">0</div>
+          <div class="stat-label">技术领域</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" data-target="6">0</div>
+          <div class="stat-label">真实案例</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" data-target="100">0</div>
+          <div class="stat-label">% 实战导向</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="catalog.html" class="btn btn-primary">
+          <span>开始探索</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="database.html" class="btn btn-secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          </svg>
+          <span>查看数据库</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 滚动指示 -->
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span>向下滚动</span>
+    </div>
+  </section>
+
+  <!-- 知识图谱导航 -->
+  <section class="section" id="knowledge-graph">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">// KNOWLEDGE GRAPH</span>
+        <h2 class="section-title">12 大技术领域</h2>
+        <p class="section-sub">点击任意模块进入对应知识库 · 支持多层跳转</p>
+      </div>
+
+      <div class="domain-grid" id="domainGrid">
+        <!-- 由 JS 渲染 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心特色 -->
+  <section class="section section-alt" id="features">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">// FEATURES</span>
+        <h2 class="section-title">核心特色</h2>
+        <p class="section-sub">真实数据 · 多元交互 · 严谨体系</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <path d="m7.5 4.21 4.5 2.6 4.5-2.6M7.5 19.79V14.6L3 12m18 0-4.5 2.6v5.19"/>
+            </svg>
+          </div>
+          <h3>结构化数据库</h3>
+          <p>19 个核心知识点，12 大技术领域，每个知识点包含详细描述、代码示例、互动问答</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m22 8-6 4 6 4V8zM14 12H2"/>
+              <path d="M2 12v4a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v8"/>
+            </svg>
+          </div>
+          <h3>视频演练</h3>
+          <p>关键技术点配套视频教程，可直接在页面内嵌播放，边学边练</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <h3>代码实验室</h3>
+          <p>真实可运行的 Python/Java 代码片段，支持一键复制到本地调试</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3>互动问答</h3>
+          <p>每个知识点配套 Quiz 问答检验学习效果，加深记忆</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18M15 3v18"/>
+            </svg>
+          </div>
+          <h3>多层跳转</h3>
+          <p>领域 → 分类 → 知识点 → 详情，多层路由结构，逻辑清晰</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>数据可靠</h3>
+          <p>所有数据来自腾讯云官方、CSDN 数据分析、OWASP、国家标准等权威来源</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 数据看板 -->
+  <section class="section" id="metrics">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">// METRICS DASHBOARD</span>
+        <h2 class="section-title">数据仪表盘</h2>
+        <p class="section-sub">实时统计知识库覆盖度</p>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric-card large">
+          <div class="metric-header">
+            <span class="metric-title">知识点完整度</span>
+            <span class="metric-badge green">GOOD</span>
+          </div>
+          <div class="metric-chart" id="completionChart"></div>
+          <div class="metric-stats">
+            <div class="ms-item">
+              <span class="ms-label">已收录</span>
+              <span class="ms-value">19</span>
+            </div>
+            <div class="ms-item">
+              <span class="ms-label">待补充</span>
+              <span class="ms-value">5</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">难度分布</span>
+          </div>
+          <div class="metric-chart" id="difficultyChart"></div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">领域覆盖</span>
+          </div>
+          <div class="metric-chart" id="domainChart"></div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">重要性分布</span>
+          </div>
+          <div class="metric-chart" id="importanceChart"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 推荐学习路径 -->
+  <section class="section section-alt" id="learning-path">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">// LEARNING PATH</span>
+        <h2 class="section-title">推荐学习路径</h2>
+        <p class="section-sub">基于面试优先级排序</p>
+      </div>
+
+      <div class="path-timeline">
+        <div class="path-step">
+          <div class="path-num">01</div>
+          <div class="path-content">
+            <h3>岗位画像 & JD 拆解</h3>
+            <p>理解岗位要求、核心技能图谱</p>
+            <div class="path-tags">
+              <span class="pt-tag">入门</span>
+              <span class="pt-tag">5分钟</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="path-step">
+          <div class="path-num">02</div>
+          <div class="path-content">
+            <h3>容灾测试核心</h3>
+            <p>RTO/RPO/SLA、混沌工程（腾讯实战）</p>
+            <div class="path-tags">
+              <span class="pt-tag">核心</span>
+              <span class="pt-tag">必学</span>
+              <span class="pt-tag">30分钟</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="path-step">
+          <div class="path-num">03</div>
+          <div class="path-content">
+            <h3>服务器架构</h3>
+            <p>游戏服务端分层、状态同步 vs 帧同步</p>
+            <div class="path-tags">
+              <span class="pt-tag">架构</span>
+              <span class="pt-tag">20分钟</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="path-step">
+          <div class="path-num">04</div>
+          <div class="path-content">
+            <h3>网络协议 & 数据库</h3>
+            <p>TCP/UDP、HTTP状态码、MySQL主从、Redis三大问题</p>
+            <div class="path-tags">
+              <span class="pt-tag">高频</span>
+              <span class="pt-tag">40分钟</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="path-step">
+          <div class="path-num">05</div>
+          <div class="path-content">
+            <h3>性能 & 安全 & CI/CD</h3>
+            <p>Locust压测、OWASP、灰度发布</p>
+            <div class="path-tags">
+              <span class="pt-tag">进阶</span>
+              <span class="pt-tag">30分钟</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>关于本知识库</h4>
+          <p>基于腾讯游戏测试岗 JD 制作，全栈展示测试工程师所需的完整技能图谱。</p>
+        </div>
+        <div class="footer-col">
+          <h4>数据来源</h4>
+          <ul>
+            <li>腾讯招聘官网 JD</li>
+            <li>腾讯云开发者社区</li>
+            <li>OWASP 官方</li>
+            <li>MySQL/Redis/Jenkins 官方文档</li>
+            <li>国家标准 GB/T 20988-2007</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>技术栈</h4>
+          <ul>
+            <li>原生 HTML5 + CSS3 + JavaScript</li>
+            <li>LocalStorage 数据持久化</li>
+            <li>Chart.js 数据可视化</li>
+            <li>响应式设计</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>页面导航</h4>
+          <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="catalog.html">知识图谱</a></li>
+            <li><a href="database.html">数据库</a></li>
+            <li><a href="search.html">搜索</a></li>
+            <li><a href="dashboard.html">数据仪表盘</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Tencent Game Test Knowledge Hub · v2.0</span>
+        <span>Built with ❤️ for QA Engineers</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 全局搜索弹窗 -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-modal-overlay" id="searchOverlay"></div>
+    <div class="search-modal-content">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input type="text" id="globalSearchInput" placeholder="搜索知识点、标签、案例..." />
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- 脚本 -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/charts.js"></script>
+  <script>
+    // 首页初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      renderDomainGrid();
+      initCharts();
+      animateCounters();
+      initParticles();
+    });
+  </script>
+</body>
+</html>

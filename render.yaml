@@ -1,0 +1,26 @@
+services:
+  - type: static
+    name: tencent-game-test-hub
+    publishPath: .
+    buildCommand: ""
+    staticPublishPath: .
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=3600
+    routes:
+      - type: rewrite
+        source: /catalog
+        destination: /catalog.html
+      - type: rewrite
+        source: /database
+        destination: /database.html
+      - type: rewrite
+        source: /search
+        destination: /search.html
+      - type: rewrite
+        source: /dashboard
+        destination: /dashboard.html
+      - type: rewrite
+        source: /
+        destination: /index.html

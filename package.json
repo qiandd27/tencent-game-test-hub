@@ -1,0 +1,29 @@
+{
+  "name": "tencent-game-test-knowledge-hub",
+  "version": "2.0.0",
+  "description": "Professional knowledge base system for Tencent Game Test Engineering interviews and real work scenarios",
+  "type": "static-site",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "serve": "npx serve -l 8000"
+  },
+  "keywords": [
+    "game-testing",
+    "tencent",
+    "knowledge-base",
+    "chaos-engineering",
+    "disaster-recovery",
+    "interview-prep",
+    "testing-engineer"
+  ],
+  "author": "Qian Duoduo",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.0"
+  }
+}

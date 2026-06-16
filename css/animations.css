@@ -1,0 +1,156 @@
+/* ============================================
+ * 高级动画系统
+ * Animations - 游戏科技风微交互
+ * ============================================ */
+
+/* 渐入 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* 霓虹脉冲 */
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 4px var(--c-primary),
+      0 0 11px var(--c-primary),
+      0 0 19px var(--c-primary);
+  }
+  50% {
+    box-shadow:
+      0 0 8px var(--c-primary),
+      0 0 22px var(--c-primary),
+      0 0 38px var(--c-primary);
+  }
+}
+
+@keyframes neonTextGlow {
+  0%, 100% { text-shadow: 0 0 4px var(--c-primary), 0 0 11px var(--c-primary); }
+  50% { text-shadow: 0 0 8px var(--c-primary), 0 0 22px var(--c-primary), 0 0 38px var(--c-primary); }
+}
+
+/* 扫描线 */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* 数字滚动 */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 粒子浮动 */
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-20px) translateX(10px); }
+  50% { transform: translateY(-40px) translateX(-5px); }
+  75% { transform: translateY(-20px) translateX(15px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* 工具类 */
+.animate-fade-in { animation: fadeIn 0.6s ease-out; }
+.animate-fade-in-up { animation: fadeInUp 0.8s ease-out; }
+.animate-scale-in { animation: scaleIn 0.4s ease-out; }
+.animate-neon-pulse { animation: neonPulse 2s ease-in-out infinite; }
+.animate-neon-text { animation: neonTextGlow 2s ease-in-out infinite; }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-spin { animation: spin 8s linear infinite; }
+.animate-blink { animation: blink 1.5s ease-in-out infinite; }
+
+/* 延迟 */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* 滚动条美化 */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--c-bg); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--c-primary), var(--c-accent-pink));
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--c-primary); }
+
+/* 选中高亮 */
+::selection {
+  background: var(--c-primary);
+  color: white;
+}
+
+/* 渐入观察 */
+.observe-fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.observe-fade.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 鼠标悬停悬浮效果 */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* 加载动画 */
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--c-border);
+  border-top-color: var(--c-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* 闪烁边框 */
+@keyframes borderBlink {
+  0%, 100% { border-color: var(--c-primary); }
+  50% { border-color: var(--c-accent-pink); }
+}
+
+.border-blink { animation: borderBlink 1.5s ease-in-out infinite; }
+
+/* 旋转渐变 */
+@keyframes rotateGradient {
+  from { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  to { background-position: 0% 50%; }
+}
+
+.gradient-flow {
+  background: linear-gradient(270deg, var(--c-primary), var(--c-accent-pink), #3b82f6, var(--c-primary));
+  background-size: 300% 300%;
+  animation: rotateGradient 8s ease infinite;
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数据仪表盘 · 腾讯游戏测试岗知识中枢</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/catalog.css" />
+  <style>
+    .dash-page { max-width: 1400px; margin: 100px auto 4rem; padding: 0 2rem; }
+    .dash-hero { text-align: center; margin-bottom: 2rem; }
+    .dash-hero h1 { font-family: var(--font-display); font-size: 2.5rem; background: linear-gradient(135deg, var(--c-primary), var(--c-accent-pink)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0.5rem; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .kpi-card { padding: 1.5rem; background: var(--c-bg-elevated); border: 1px solid var(--c-border); border-radius: 12px; position: relative; overflow: hidden; }
+    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--c-primary), var(--c-accent-pink)); }
+    .kpi-card .label { font-size: 0.8rem; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .kpi-card .value { font-family: var(--font-display); font-size: 2.5rem; font-weight: 900; color: var(--c-primary); line-height: 1; }
+    .kpi-card .sub { font-size: 0.85rem; color: var(--c-text-muted); margin-top: 0.5rem; }
+    .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .chart-card { padding: 1.5rem; background: var(--c-bg-elevated); border: 1px solid var(--c-border); border-radius: 12px; }
+    .chart-card h3 { font-size: 1rem; color: var(--c-text); margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .chart-card canvas { max-height: 300px; }
+    .chart-bars { display: flex; flex-direction: column; gap: 0.75rem; }
+    .chart-bar-row { display: flex; align-items: center; gap: 0.75rem; }
+    .chart-bar-label { width: 120px; font-size: 0.85rem; color: var(--c-text-muted); }
+    .chart-bar-track { flex: 1; height: 24px; background: var(--c-bg); border-radius: 4px; overflow: hidden; position: relative; }
+    .chart-bar-fill { height: 100%; background: linear-gradient(90deg, var(--c-primary), var(--c-accent-pink)); display: flex; align-items: center; padding-left: 0.5rem; color: white; font-size: 0.75rem; font-weight: 600; transition: width 0.6s; }
+    .chart-bar-value { width: 40px; text-align: right; color: var(--c-text); font-family: var(--font-mono); font-size: 0.85rem; }
+    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag-cloud .tag { font-size: 0.85rem; padding: 0.3rem 0.8rem; }
+    @media (max-width: 768px) {
+      .charts-grid, .bottom-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="theme-dark">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <nav class="top-nav" id="topNav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">GAME<span class="accent">TEST</span>.HUB</div>
+          <div class="brand-sub">知识中枢 v2.0</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link"><span class="nav-link-num">01</span><span>首页</span></a>
+        <a href="catalog.html" class="nav-link"><span class="nav-link-num">02</span><span>知识图谱</span></a>
+        <a href="database.html" class="nav-link"><span class="nav-link-num">03</span><span>数据库</span></a>
+        <a href="search.html" class="nav-link"><span class="nav-link-num">04</span><span>搜索</span></a>
+        <a href="dashboard.html" class="nav-link active"><span class="nav-link-num">05</span><span>数据仪表盘</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="dash-page">
+    <div class="dash-hero">
+      <h1>📊 数据仪表盘</h1>
+      <p style="color:var(--c-text-muted);">实时统计 · 知识图谱全貌 · 重点分布</p>
+    </div>
+
+    <!-- KPI 卡片 -->
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <!-- 图表区 -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>📈 分类分布 <span style="font-size:0.8rem; color:var(--c-text-muted); font-weight:400;">按知识条目数</span></h3>
+        <div class="chart-bars" id="categoryBars"></div>
+      </div>
+      <div class="chart-card">
+        <h3>🎯 难度分布</h3>
+        <canvas id="difficultyChart"></canvas>
+      </div>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="chart-card">
+        <h3>⭐ 重要性 TOP 10</h3>
+        <div class="chart-bars" id="importanceBars"></div>
+      </div>
+      <div class="chart-card">
+        <h3>🏷️ 标签云</h3>
+        <div class="tag-cloud" id="tagCloud"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="container"><div class="footer-bottom"><span>© 2026 Tencent Game Test Knowledge Hub · v2.0</span></div></div></footer>
+
+  <script src="js/data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    function renderKPIs() {
+      const data = KNOWLEDGE_BASE;
+      const cats = new Set(data.map(x => x.category)).size;
+      const subcats = new Set(data.map(x => x.subcategory).filter(Boolean)).size;
+      const highImp = data.filter(x => x.importance >= 5).length;
+      const withCode = data.filter(x => x.codeExample).length;
+      const withVideo = data.filter(x => x.videoUrl).length;
+      const withQuiz = data.filter(x => x.quiz).length;
+      const totalTags = new Set(data.flatMap(x => x.tags || [])).size;
+      const avgImp = (data.reduce((s, x) => s + (x.importance || 0), 0) / data.length).toFixed(2);
+
+      document.getElementById('kpiGrid').innerHTML = `
+        <div class="kpi-card"><div class="label">总知识条目</div><div class="value">${data.length}</div><div class="sub">${cats} 领域 · ${subcats} 子分类</div></div>
+        <div class="kpi-card"><div class="label">重点条目</div><div class="value">${highImp}</div><div class="sub">重要性 ≥ 5 颗星</div></div>
+        <div class="kpi-card"><div class="label">平均重要性</div><div class="value">${avgImp}</div><div class="sub">满分 5.0</div></div>
+        <div class="kpi-card"><div class="label">代码示例</div><div class="value">${withCode}</div><div class="sub">实战可运行</div></div>
+        <div class="kpi-card"><div class="label">视频演练</div><div class="value">${withVideo}</div><div class="sub">可视化讲解</div></div>
+        <div class="kpi-card"><div class="label">互动测验</div><div class="value">${withQuiz}</div><div class="sub">边学边测</div></div>
+        <div class="kpi-card"><div class="label">标签总数</div><div class="value">${totalTags}</div><div class="sub">多维关联</div></div>
+        <div class="kpi-card"><div class="label">数据来源</div><div class="value">${new Set(data.map(x => x.source).filter(Boolean)).size}</div><div class="sub">权威可靠</div></div>
+      `;
+    }
+
+    function renderCategoryBars() {
+      const counts = {};
+      KNOWLEDGE_BASE.forEach(x => { counts[x.category] = (counts[x.category] || 0) + 1; });
+      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+      const max = sorted[0][1];
+      document.getElementById('categoryBars').innerHTML = sorted.map(([cat, n]) => {
+        const pct = (n / max * 100).toFixed(0);
+        return `
+          <div class="chart-bar-row">
+            <div class="chart-bar-label">${cat}</div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${pct}%">${n}</div></div>
+            <div class="chart-bar-value">${n}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderImportanceBars() {
+      const top = [...KNOWLEDGE_BASE].sort((a, b) => b.importance - a.importance || a.title.localeCompare(b.title)).slice(0, 10);
+      document.getElementById('importanceBars').innerHTML = top.map((item, i) => {
+        const pct = item.importance / 5 * 100;
+        return `
+          <div class="chart-bar-row" style="cursor:pointer;" onclick="location.href='catalog.html'">
+            <div class="chart-bar-label" title="${item.title}" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">#${i+1} ${item.title.substring(0,8)}</div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${pct}%; background:linear-gradient(90deg, #f43f5e, #f59e0b);">★${item.importance}</div></div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderTagCloud() {
+      const counts = {};
+      KNOWLEDGE_BASE.forEach(x => (x.tags || []).forEach(t => { counts[t] = (counts[t] || 0) + 1; }));
+      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+      document.getElementById('tagCloud').innerHTML = sorted.map(([t, n]) => {
+        const size = 0.8 + Math.min(n * 0.2, 1.2);
+        const colors = ['#7C3AED', '#F43F5E', '#10B981', '#F59E0B', '#3B82F6'];
+        const color = counts[t] >= 3 ? colors[0] : colors[counts[t] % colors.length];
+        return `<span class="tag" style="font-size:${size}rem; background:${color}20; border-color:${color}50; color:${color};">#${t} <span style="opacity:0.6; font-size:0.7em;">${n}</span></span>`;
+      }).join('');
+    }
+
+    function renderDifficultyChart() {
+      const dist = [0, 0, 0, 0, 0];
+      KNOWLEDGE_BASE.forEach(x => { if (x.difficulty >= 1 && x.difficulty <= 5) dist[x.difficulty - 1]++; });
+      new Chart(document.getElementById('difficultyChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['1★ 入门', '2★ 基础', '3★ 中级', '4★ 高级', '5★ 专家'],
+          datasets: [{
+            data: dist,
+            backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#f97316', '#ef4444'],
+            borderColor: 'rgba(0,0,0,0.3)',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 11 } } }
+          }
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderKPIs();
+      renderCategoryBars();
+      renderImportanceBars();
+      renderTagCloud();
+      renderDifficultyChart();
+    });
+  </script>
+</body>
+</html>

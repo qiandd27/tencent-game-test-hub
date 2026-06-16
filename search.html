@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>搜索 · 腾讯游戏测试岗知识中枢</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/catalog.css" />
+  <style>
+    .search-page { max-width: 1200px; margin: 120px auto 4rem; padding: 0 2rem; }
+    .search-hero { text-align: center; margin-bottom: 2rem; }
+    .search-hero h1 { font-family: var(--font-display); font-size: 2.5rem; background: linear-gradient(135deg, var(--c-primary), var(--c-accent-pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .search-box { position: relative; max-width: 800px; margin: 0 auto 2rem; }
+    .search-box input { width: 100%; padding: 1.2rem 1.5rem 1.2rem 3.5rem; font-size: 1.1rem; background: var(--c-bg-elevated); border: 2px solid var(--c-border); border-radius: 12px; color: var(--c-text); }
+    .search-box input:focus { outline: none; border-color: var(--c-primary); box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15); }
+    .search-box svg { position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); color: var(--c-text-muted); width: 24px; height: 24px; }
+    .search-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2rem; }
+    .filter-chip { padding: 0.4rem 1rem; background: var(--c-bg-elevated); border: 1px solid var(--c-border); border-radius: 20px; cursor: pointer; font-size: 0.85rem; color: var(--c-text-muted); transition: all 0.2s; }
+    .filter-chip:hover { border-color: var(--c-primary); color: var(--c-text); }
+    .filter-chip.active { background: var(--c-primary); border-color: var(--c-primary); color: white; }
+    .search-result { background: var(--c-bg-elevated); border: 1px solid var(--c-border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; cursor: pointer; transition: all 0.2s; }
+    .search-result:hover { border-color: var(--c-primary); transform: translateX(4px); }
+    .search-result h3 { color: var(--c-primary); margin-bottom: 0.5rem; font-size: 1.1rem; }
+    .search-result .meta { font-size: 0.8rem; color: var(--c-text-muted); margin-bottom: 0.5rem; }
+    .search-result p { font-size: 0.9rem; color: var(--c-text); line-height: 1.6; }
+    .search-result mark { background: rgba(245, 158, 11, 0.3); color: #fbbf24; padding: 0 0.2rem; border-radius: 2px; }
+    .search-stats { text-align: center; color: var(--c-text-muted); margin-bottom: 2rem; }
+    .empty-state { text-align: center; padding: 4rem 2rem; color: var(--c-text-muted); }
+    .empty-state svg { width: 80px; height: 80px; opacity: 0.3; margin-bottom: 1rem; }
+  </style>
+</head>
+<body class="theme-dark">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <nav class="top-nav" id="topNav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">GAME<span class="accent">TEST</span>.HUB</div>
+          <div class="brand-sub">知识中枢 v2.0</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link"><span class="nav-link-num">01</span><span>首页</span></a>
+        <a href="catalog.html" class="nav-link"><span class="nav-link-num">02</span><span>知识图谱</span></a>
+        <a href="database.html" class="nav-link"><span class="nav-link-num">03</span><span>数据库</span></a>
+        <a href="search.html" class="nav-link active"><span class="nav-link-num">04</span><span>搜索</span></a>
+        <a href="dashboard.html" class="nav-link"><span class="nav-link-num">05</span><span>数据仪表盘</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="search-page">
+    <div class="search-hero">
+      <h1>🔍 全局搜索</h1>
+      <p style="color:var(--c-text-muted);">智能匹配 · 跨字段 · 28 个知识条目实时检索</p>
+    </div>
+
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="输入关键词，如：混沌工程、TCP三次握手、Redis..." autocomplete="off" />
+    </div>
+
+    <div class="search-filters" id="filterChips"></div>
+
+    <div class="search-stats" id="searchStats">输入关键词开始搜索</div>
+
+    <div id="searchResults"></div>
+  </div>
+
+  <footer class="footer"><div class="container"><div class="footer-bottom"><span>© 2026 Tencent Game Test Knowledge Hub · v2.0</span></div></div></footer>
+
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-panel-header">
+      <h2 id="detailTitle">详情</h2>
+      <button class="btn-close" id="closeDetail">✕</button>
+    </div>
+    <div class="detail-panel-body" id="detailBody"></div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script>
+    let activeFilter = 'all';
+    let query = '';
+
+    function renderFilters() {
+      const cats = ['all', ...new Set(KNOWLEDGE_BASE.map(x => x.category))];
+      const html = cats.map(c => {
+        const label = c === 'all' ? '全部' : c;
+        const count = c === 'all' ? KNOWLEDGE_BASE.length : KNOWLEDGE_BASE.filter(x => x.category === c).length;
+        return `<div class="filter-chip ${c === activeFilter ? 'active' : ''}" data-cat="${c}">${label} (${count})</div>`;
+      }).join('');
+      document.getElementById('filterChips').innerHTML = html;
+      document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.onclick = () => {
+          activeFilter = chip.dataset.cat;
+          renderFilters();
+          doSearch();
+        };
+      });
+    }
+
+    function highlight(text, q) {
+      if (!q) return text;
+      const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      return text.replace(re, '<mark>$1</mark>');
+    }
+
+    function doSearch() {
+      query = document.getElementById('searchInput').value.trim();
+      const results = KNOWLEDGE_BASE.filter(item => {
+        const inCat = activeFilter === 'all' || item.category === activeFilter;
+        if (!inCat) return false;
+        if (!query) return true;
+        const q = query.toLowerCase();
+        return (
+          item.id.toLowerCase().includes(q) ||
+          item.title.toLowerCase().includes(q) ||
+          (item.summary || '').toLowerCase().includes(q) ||
+          (item.content || '').toLowerCase().includes(q) ||
+          (item.tags || []).some(t => t.toLowerCase().includes(q))
+        );
+      });
+
+      // 相关度排序
+      if (query) {
+        results.sort((a, b) => {
+          const aScore = (a.title.toLowerCase().includes(query.toLowerCase()) ? 10 : 0) + (a.importance || 0);
+          const bScore = (b.title.toLowerCase().includes(query.toLowerCase()) ? 10 : 0) + (b.importance || 0);
+          return bScore - aScore;
+        });
+      }
+
+      const stats = document.getElementById('searchStats');
+      stats.textContent = query ? `找到 ${results.length} 个结果 · 关键词："${query}"` : `显示 ${results.length} 个知识点`;
+
+      const container = document.getElementById('searchResults');
+      if (results.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><path d="M8 15s1.5-2 4-2 4 2 4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
+            </svg>
+            <h3>没有找到匹配的知识</h3>
+            <p>试试其他关键词，如：TCP、混沌、Redis、案例</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = results.map(item => {
+        const snippet = (item.summary || item.content || '').substring(0, 200);
+        return `
+          <div class="search-result" data-id="${item.id}">
+            <h3>${highlight(item.title, query)}</h3>
+            <div class="meta">📂 ${item.category} > ${item.subcategory || '-'} · ⭐ 重要性 ${item.importance}/5 · 📊 难度 ${item.difficulty}/5</div>
+            <p>${highlight(snippet + (snippet.length === 200 ? '...' : ''), query)}</p>
+            <div style="margin-top:0.5rem;">
+              ${(item.tags || []).map(t => `<span class="tag">#${t}</span>`).join(' ')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.querySelectorAll('.search-result').forEach(r => {
+        r.onclick = () => showDetail(r.dataset.id);
+      });
+    }
+
+    // 详情
+    function showDetail(id) {
+      const item = KNOWLEDGE_BASE.find(k => k.id === id);
+      if (!item) return;
+      document.getElementById('detailTitle').textContent = item.title;
+      const body = document.getElementById('detailBody');
+      const md = item.content || '';
+      body.innerHTML = `
+        <div style="margin-bottom:1rem;">${(item.tags || []).map(t => `<span class="tag">#${t}</span>`).join(' ')}</div>
+        <div class="detail-summary">${item.summary}</div>
+        <div class="detail-content">${md.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+          .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+          .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+          .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+          .replace(/`([^`]+)`/g, '<code>$1</code>')
+          .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')}</div>
+        <div style="margin-top:1.5rem; padding:0.75rem; background:var(--c-bg); border-radius:6px; font-size:0.8rem; color:var(--c-text-muted);">
+          <strong>📚 来源：</strong>${item.source || '多源综合'}
+        </div>
+      `;
+      document.getElementById('detailPanel').classList.add('open');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderFilters();
+      doSearch();
+      document.getElementById('searchInput').addEventListener('input', doSearch);
+      document.getElementById('closeDetail').onclick = () => {
+        document.getElementById('detailPanel').classList.remove('open');
+      };
+    });
+
+    window.showDetail = showDetail;
+  </script>
+</body>
+</html>

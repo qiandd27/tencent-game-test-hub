@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数据库 · 腾讯游戏测试岗知识中枢</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/catalog.css" />
+  <style>
+    .db-toolbar { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
+    .db-toolbar input, .db-toolbar select { padding: 0.5rem 1rem; background: var(--c-bg-elevated); border: 1px solid var(--c-border); border-radius: 6px; color: var(--c-text); font-size: 0.9rem; }
+    .db-table { width: 100%; border-collapse: collapse; background: var(--c-bg-elevated); border-radius: 8px; overflow: hidden; }
+    .db-table th { background: var(--c-bg); padding: 0.85rem 1rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--c-text-muted); border-bottom: 1px solid var(--c-border); }
+    .db-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--c-border); font-size: 0.9rem; }
+    .db-table tr:hover { background: var(--c-bg-elevated-hover); cursor: pointer; }
+    .db-table tr.selected { background: linear-gradient(90deg, rgba(124, 58, 237, 0.2), transparent); }
+    .db-id { font-family: var(--font-mono); color: var(--c-primary); font-size: 0.85rem; }
+    .db-stat { display: flex; gap: 0.3rem; }
+    .db-stat .dot { width: 8px; height: 8px; }
+    .db-actions { display: flex; gap: 0.3rem; }
+    .db-actions button { padding: 0.3rem 0.6rem; font-size: 0.75rem; background: var(--c-bg); border: 1px solid var(--c-border); border-radius: 4px; color: var(--c-text); cursor: pointer; }
+    .db-actions button:hover { border-color: var(--c-primary); color: var(--c-primary); }
+    .db-actions button.del:hover { border-color: var(--c-accent-pink); color: var(--c-accent-pink); }
+    .db-pagination { display: flex; gap: 0.5rem; margin-top: 1.5rem; justify-content: center; }
+    .db-pagination button { padding: 0.5rem 0.85rem; background: var(--c-bg-elevated); border: 1px solid var(--c-border); color: var(--c-text); border-radius: 4px; cursor: pointer; }
+    .db-pagination button.active { background: var(--c-primary); border-color: var(--c-primary); }
+    .db-pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .db-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .db-stat-card { padding: 1.25rem; background: var(--c-bg-elevated); border: 1px solid var(--c-border); border-radius: 8px; }
+    .db-stat-card .num { font-family: var(--font-display); font-size: 2rem; font-weight: 900; color: var(--c-primary); }
+    .db-stat-card .label { font-size: 0.85rem; color: var(--c-text-muted); margin-top: 0.3rem; }
+    .editor-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; display: none; align-items: center; justify-content: center; }
+    .editor-modal.open { display: flex; }
+    .editor-box { background: var(--c-bg-elevated); border: 1px solid var(--c-border); border-radius: 8px; padding: 1.5rem; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; }
+    .editor-box h3 { margin-bottom: 1rem; color: var(--c-primary); }
+    .editor-box input, .editor-box textarea, .editor-box select { width: 100%; padding: 0.5rem; background: var(--c-bg); border: 1px solid var(--c-border); border-radius: 4px; color: var(--c-text); margin-bottom: 0.75rem; font-family: inherit; }
+    .editor-box textarea { min-height: 200px; font-family: var(--font-mono); font-size: 0.85rem; }
+    .editor-box .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  </style>
+</head>
+<body class="theme-dark">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <nav class="top-nav" id="topNav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">GAME<span class="accent">TEST</span>.HUB</div>
+          <div class="brand-sub">知识中枢 v2.0</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link"><span class="nav-link-num">01</span><span>首页</span></a>
+        <a href="catalog.html" class="nav-link"><span class="nav-link-num">02</span><span>知识图谱</span></a>
+        <a href="database.html" class="nav-link active"><span class="nav-link-num">03</span><span>数据库</span></a>
+        <a href="search.html" class="nav-link"><span class="nav-link-num">04</span><span>搜索</span></a>
+        <a href="dashboard.html" class="nav-link"><span class="nav-link-num">05</span><span>数据仪表盘</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="catalog-hero">
+    <div class="container">
+      <h1>💾 知识数据库</h1>
+      <p>CRUD管理 · 增删改查 · 实时数据持久化到 LocalStorage</p>
+    </div>
+  </section>
+
+  <div class="tree-container">
+    <!-- 数据概览 -->
+    <div class="db-stats" id="dbStats"></div>
+
+    <!-- 工具栏 -->
+    <div class="db-toolbar">
+      <input type="text" id="dbSearch" placeholder="🔍 搜索 id / 标题 / 标签..." style="flex:1; min-width:200px;" />
+      <select id="dbCategoryFilter">
+        <option value="">全部分类</option>
+      </select>
+      <select id="dbSortBy">
+        <option value="id">按 ID 排序</option>
+        <option value="difficulty">按难度</option>
+        <option value="importance">按重要性</option>
+        <option value="title">按标题</option>
+      </select>
+      <button class="btn-tool" id="addNewBtn">➕ 新增</button>
+      <button class="btn-tool" id="exportBtn">📥 导出 JSON</button>
+      <button class="btn-tool" id="importBtn">📤 导入</button>
+      <button class="btn-tool" id="resetBtn">🔄 重置</button>
+    </div>
+
+    <!-- 表格 -->
+    <div style="overflow-x:auto;">
+      <table class="db-table" id="dbTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>分类</th>
+            <th>标题</th>
+            <th>难度</th>
+            <th>重要性</th>
+            <th>标签</th>
+            <th>来源</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="dbTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- 分页 -->
+    <div class="db-pagination" id="dbPagination"></div>
+  </div>
+
+  <!-- 编辑器弹窗 -->
+  <div class="editor-modal" id="editorModal">
+    <div class="editor-box">
+      <h3 id="editorTitle">新增知识点</h3>
+      <div class="form-row">
+        <input type="text" id="editId" placeholder="ID (英文/数字)" />
+        <input type="text" id="editCategory" placeholder="分类" />
+      </div>
+      <div class="form-row">
+        <input type="text" id="editSubcategory" placeholder="子分类" />
+        <input type="text" id="editTitle" placeholder="标题" />
+      </div>
+      <input type="text" id="editSummary" placeholder="摘要" />
+      <div class="form-row">
+        <input type="number" id="editDifficulty" placeholder="难度 (1-5)" min="1" max="5" />
+        <input type="number" id="editImportance" placeholder="重要性 (1-5)" min="1" max="5" />
+      </div>
+      <input type="text" id="editSource" placeholder="数据来源" />
+      <input type="text" id="editTags" placeholder="标签 (逗号分隔)" />
+      <textarea id="editContent" placeholder="详细内容 (Markdown)"></textarea>
+      <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+        <button class="btn-tool" id="saveEdit" style="flex:1; background:var(--c-primary); color:white;">💾 保存</button>
+        <button class="btn-tool" id="cancelEdit" style="flex:1;">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="importFile" accept=".json" style="display:none;" />
+
+  <footer class="footer"><div class="container"><div class="footer-bottom"><span>© 2026 Tencent Game Test Knowledge Hub · v2.0</span></div></div></footer>
+
+  <script src="js/data.js"></script>
+  <script>
+    const STORAGE_KEY = 'gametest_kb_v2';
+    let db = loadDB();
+    let filtered = [...db];
+    let currentPage = 1;
+    const pageSize = 10;
+    let editingId = null;
+
+    function loadDB() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try { return JSON.parse(stored); } catch(e) {}
+      }
+      // 首次从 data.js 加载并保存
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(KNOWLEDGE_BASE));
+      return [...KNOWLEDGE_BASE];
+    }
+
+    function saveDB() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    }
+
+    function renderStats() {
+      const stats = document.getElementById('dbStats');
+      const catCount = new Set(db.map(x => x.category)).size;
+      const avgDiff = (db.reduce((s, x) => s + (x.difficulty || 0), 0) / db.length).toFixed(1);
+      const highImp = db.filter(x => x.importance >= 5).length;
+      const hasVideo = db.filter(x => x.videoUrl).length;
+      stats.innerHTML = `
+        <div class="db-stat-card"><div class="num">${db.length}</div><div class="label">总知识点数</div></div>
+        <div class="db-stat-card"><div class="num">${catCount}</div><div class="label">领域分类数</div></div>
+        <div class="db-stat-card"><div class="num">${avgDiff}</div><div class="label">平均难度</div></div>
+        <div class="db-stat-card"><div class="num">${highImp}</div><div class="label">重点条目 (★5)</div></div>
+        <div class="db-stat-card"><div class="num">${hasVideo}</div><div class="label">含视频演练</div></div>
+      `;
+    }
+
+    function renderCategoryOptions() {
+      const sel = document.getElementById('dbCategoryFilter');
+      const cats = [...new Set(db.map(x => x.category))].sort();
+      sel.innerHTML = '<option value="">全部分类</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    function renderTable() {
+      const start = (currentPage - 1) * pageSize;
+      const slice = filtered.slice(start, start + pageSize);
+      const tbody = document.getElementById('dbTableBody');
+      tbody.innerHTML = slice.map(item => {
+        const tags = (item.tags || []).slice(0, 3).map(t => `<span class="tag">${t}</span>`).join(' ');
+        return `
+          <tr data-id="${item.id}">
+            <td class="db-id">${item.id}</td>
+            <td>${item.category}</td>
+            <td><strong>${item.title}</strong></td>
+            <td><div class="db-stat">${[1,2,3,4,5].map(i => `<div class="dot ${i <= item.difficulty ? 'filled d-' + item.difficulty : ''}"></div>`).join('')}</div></td>
+            <td><div class="db-stat">${[1,2,3,4,5].map(i => `<div class="dot ${i <= item.importance ? 'filled d-' + item.importance : ''}"></div>`).join('')}</div></td>
+            <td>${tags}</td>
+            <td style="font-size:0.8rem; color:var(--c-text-muted);">${item.source || '-'}</td>
+            <td><div class="db-actions">
+              <button onclick="editItem('${item.id}')">✏️</button>
+              <button onclick="viewItem('${item.id}')">👁</button>
+              <button class="del" onclick="deleteItem('${item.id}')">🗑</button>
+            </div></td>
+          </tr>
+        `;
+      }).join('');
+
+      // 分页
+      const totalPages = Math.ceil(filtered.length / pageSize);
+      const pag = document.getElementById('dbPagination');
+      let pagHtml = `<button onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹ 上一页</button>`;
+      for (let p = 1; p <= totalPages; p++) {
+        if (p === 1 || p === totalPages || Math.abs(p - currentPage) <= 2) {
+          pagHtml += `<button class="${p === currentPage ? 'active' : ''}" onclick="goPage(${p})">${p}</button>`;
+        } else if (Math.abs(p - currentPage) === 3) {
+          pagHtml += `<span style="color:var(--c-text-muted)">...</span>`;
+        }
+      }
+      pagHtml += `<button onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>下一页 ›</button>`;
+      pag.innerHTML = pagHtml;
+    }
+
+    function applyFilter() {
+      const q = document.getElementById('dbSearch').value.toLowerCase();
+      const cat = document.getElementById('dbCategoryFilter').value;
+      const sort = document.getElementById('dbSortBy').value;
+      filtered = db.filter(item => {
+        const matchQ = !q || item.id.toLowerCase().includes(q) || item.title.toLowerCase().includes(q) || (item.tags || []).some(t => t.toLowerCase().includes(q));
+        const matchC = !cat || item.category === cat;
+        return matchQ && matchC;
+      });
+      filtered.sort((a, b) => {
+        if (sort === 'difficulty') return b.difficulty - a.difficulty;
+        if (sort === 'importance') return b.importance - a.importance;
+        if (sort === 'title') return a.title.localeCompare(b.title);
+        return a.id.localeCompare(b.id);
+      });
+      currentPage = 1;
+      renderTable();
+    }
+
+    window.goPage = (p) => {
+      const totalPages = Math.ceil(filtered.length / pageSize);
+      if (p < 1 || p > totalPages) return;
+      currentPage = p;
+      renderTable();
+    };
+
+    window.editItem = (id) => {
+      const item = db.find(x => x.id === id);
+      if (!item) return;
+      editingId = id;
+      document.getElementById('editorTitle').textContent = '编辑：' + item.title;
+      document.getElementById('editId').value = item.id;
+      document.getElementById('editId').disabled = true;
+      document.getElementById('editCategory').value = item.category || '';
+      document.getElementById('editSubcategory').value = item.subcategory || '';
+      document.getElementById('editTitle').value = item.title;
+      document.getElementById('editSummary').value = item.summary || '';
+      document.getElementById('editDifficulty').value = item.difficulty;
+      document.getElementById('editImportance').value = item.importance;
+      document.getElementById('editSource').value = item.source || '';
+      document.getElementById('editTags').value = (item.tags || []).join(', ');
+      document.getElementById('editContent').value = item.content || '';
+      document.getElementById('editorModal').classList.add('open');
+    };
+
+    window.viewItem = (id) => {
+      window.location.href = 'catalog.html#' + id;
+    };
+
+    window.deleteItem = (id) => {
+      if (!confirm('确认删除：' + id + '？')) return;
+      db = db.filter(x => x.id !== id);
+      saveDB();
+      renderStats(); renderCategoryOptions(); applyFilter();
+    };
+
+    document.getElementById('addNewBtn').onclick = () => {
+      editingId = null;
+      document.getElementById('editorTitle').textContent = '新增知识点';
+      document.getElementById('editId').disabled = false;
+      document.getElementById('editId').value = 'new-' + Date.now();
+      document.getElementById('editCategory').value = '';
+      document.getElementById('editSubcategory').value = '';
+      document.getElementById('editTitle').value = '';
+      document.getElementById('editSummary').value = '';
+      document.getElementById('editDifficulty').value = 3;
+      document.getElementById('editImportance').value = 3;
+      document.getElementById('editSource').value = '';
+      document.getElementById('editTags').value = '';
+      document.getElementById('editContent').value = '';
+      document.getElementById('editorModal').classList.add('open');
+    };
+
+    document.getElementById('saveEdit').onclick = () => {
+      const obj = {
+        id: document.getElementById('editId').value.trim(),
+        category: document.getElementById('editCategory').value.trim(),
+        subcategory: document.getElementById('editSubcategory').value.trim(),
+        title: document.getElementById('editTitle').value.trim(),
+        summary: document.getElementById('editSummary').value.trim(),
+        difficulty: parseInt(document.getElementById('editDifficulty').value) || 3,
+        importance: parseInt(document.getElementById('editImportance').value) || 3,
+        source: document.getElementById('editSource').value.trim(),
+        tags: document.getElementById('editTags').value.split(',').map(s => s.trim()).filter(Boolean),
+        content: document.getElementById('editContent').value
+      };
+      if (!obj.id || !obj.title) { alert('ID 和标题必填'); return; }
+      if (editingId) {
+        const idx = db.findIndex(x => x.id === editingId);
+        if (idx >= 0) db[idx] = { ...db[idx], ...obj };
+      } else {
+        if (db.some(x => x.id === obj.id)) { alert('ID 已存在'); return; }
+        db.push(obj);
+      }
+      saveDB();
+      document.getElementById('editorModal').classList.remove('open');
+      renderStats(); renderCategoryOptions(); applyFilter();
+    };
+
+    document.getElementById('cancelEdit').onclick = () => {
+      document.getElementById('editorModal').classList.remove('open');
+    };
+
+    document.getElementById('exportBtn').onclick = () => {
+      const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'gametest-kb-' + Date.now() + '.json';
+      a.click();
+    };
+
+    document.getElementById('importBtn').onclick = () => document.getElementById('importFile').click();
+    document.getElementById('importFile').onchange = (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          if (Array.isArray(data)) {
+            db = data;
+            saveDB();
+            renderStats(); renderCategoryOptions(); applyFilter();
+            alert('导入成功：' + data.length + ' 条');
+          }
+        } catch(err) { alert('JSON 解析失败'); }
+      };
+      r.readAsText(f);
+    };
+
+    document.getElementById('resetBtn').onclick = () => {
+      if (!confirm('重置会清空所有修改，恢复到初始数据，确定？')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      db = loadDB();
+      renderStats(); renderCategoryOptions(); applyFilter();
+    };
+
+    document.getElementById('dbSearch').oninput = applyFilter;
+    document.getElementById('dbCategoryFilter').onchange = applyFilter;
+    document.getElementById('dbSortBy').onchange = applyFilter;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderStats();
+      renderCategoryOptions();
+      applyFilter();
+    });
+  </script>
+</body>
+</html>
