@@ -1,7 +1,7 @@
 services:
   - type: web
     name: tencent-game-test-hub
-    env: static
+    runtime: static
     staticPublishPath: .
     routes:
       - type: rewrite
