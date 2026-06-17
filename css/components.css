@@ -2,7 +2,7 @@
 
 /* 通用代码块 */
 pre {
-  background: rgba(10, 10, 23, 0.6);
+  background: #f1f5f9;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-4);

@@ -285,7 +285,7 @@
   height: 100vh;
   background: var(--c-bg-elevated);
   border-left: 1px solid var(--c-border);
-  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.08);
   transition: right 0.3s ease;
   z-index: 100;
   overflow-y: auto;

@@ -4,47 +4,47 @@
    ============================================ */
 
 :root {
-  /* 主题色 - Vercel/Radix 工程师化配色（去AI感） */
-  --color-bg: #000000;
-  --color-bg-alt: #0a0a0a;
-  --color-bg-card: #0a0a0a;
-  --color-bg-elevated: #111111;
-  --color-bg-glass: rgba(10, 10, 10, 0.8);
-  --color-border: #1f1f1f;
-  --color-border-hover: #2f2f2f;
-  --color-border-strong: #3f3f3f;
+  /* ===== 浅色主题（默认）===== */
+  --color-bg: #ffffff;
+  --color-bg-alt: #f8fafc;
+  --color-bg-card: #ffffff;
+  --color-bg-elevated: #f1f5f9;
+  --color-bg-glass: rgba(255, 255, 255, 0.85);
+  --color-border: #e2e8f0;
+  --color-border-hover: #cbd5e1;
+  --color-border-strong: #94a3b8;
 
-  /* 主色 - 极简白色 + 蓝色点缀 */
-  --color-primary: #ffffff;
-  --color-primary-glow: rgba(255, 255, 255, 0.1);
-  --color-secondary: #0070f3; /* Vercel蓝 */
-  --color-accent: #50e3c2; /* 成功绿 */
+  /* 主色 - Vercel蓝 + 深色文字 */
+  --color-primary: #0070f3;
+  --color-primary-glow: rgba(0, 112, 243, 0.12);
+  --color-secondary: #0070f3;
+  --color-accent: #10b981;
 
-  /* 强调色 - 数据可视化用 */
-  --color-cyan: #79ffe1;
-  --color-pink: #ff0080;
-  --color-yellow: #f5a623;
-  --color-green: #2ecc71;
+  /* 强调色 */
+  --color-cyan: #0891b2;
+  --color-pink: #ec4899;
+  --color-yellow: #f59e0b;
+  --color-green: #10b981;
   --color-blue: #0070f3;
-  --color-orange: #ff6b35;
-  --color-red: #e00;
+  --color-orange: #f97316;
+  --color-red: #ef4444;
 
-  /* 文字色 - Linear/Vercel风格 */
-  --color-text: #ededed;
-  --color-text-muted: #a1a1a1;
-  --color-text-dim: #666666;
-  --color-text-faint: #444444;
+  /* 文字色 */
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-dim: #94a3b8;
+  --color-text-faint: #cbd5e1;
 
   /* 字体 */
-  --font-display: 'Russo One', 'Orbitron', sans-serif;
-  --font-body: 'Chakra Petch', 'Inter', sans-serif;
+  --font-display: 'Inter', 'PingFang SC', sans-serif;
+  --font-body: 'Inter', 'PingFang SC', sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
-  /* 简写别名 - 兼容其他页面的 --c-* 引用 */
+  /* 简写别名 */
   --c-bg: var(--color-bg);
   --c-bg-alt: var(--color-bg-alt);
   --c-bg-elevated: var(--color-bg-card);
-  --c-bg-elevated-hover: rgba(40, 40, 70, 0.85);
+  --c-bg-elevated-hover: #f1f5f9;
   --c-border: var(--color-border);
   --c-primary: var(--color-primary);
   --c-primary-hover: var(--color-secondary);
@@ -68,19 +68,19 @@
   --space-20: 5rem;
 
   /* 圆角 */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
 
   /* 阴影 */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-  --shadow-lg: 0 10px 30px rgba(0,0,0,0.5);
-  --shadow-glow: 0 0 20px var(--color-primary-glow);
-  --shadow-glow-cyan: 0 0 20px rgba(0, 255, 255, 0.3);
-  --shadow-glow-pink: 0 0 20px rgba(255, 0, 128, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+  --shadow-glow: 0 0 20px rgba(0, 112, 243, 0.15);
+  --shadow-glow-cyan: 0 0 20px rgba(8, 145, 178, 0.2);
+  --shadow-glow-pink: 0 0 20px rgba(236, 72, 153, 0.2);
 
   /* 动效 */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -90,18 +90,26 @@
   --duration-slow: 400ms;
 }
 
-/* 浅色主题 */
-body.theme-light {
-  --color-bg: #f8fafc;
-  --color-bg-alt: #f1f5f9;
-  --color-bg-card: rgba(255, 255, 255, 0.85);
-  --color-bg-glass: rgba(255, 255, 255, 0.7);
-  --color-border: rgba(0, 112, 243, 0.15);
-  --color-border-hover: rgba(0, 112, 243, 0.35);
-  --color-text: #1e293b;
-  --color-text-muted: #475569;
-  --color-text-dim: #94a3b8;
-  --shadow-glow: 0 0 20px rgba(0, 112, 243, 0.2);
+/* 深色主题（备用） */
+body.theme-dark {
+  --color-bg: #0a0a0a;
+  --color-bg-alt: #0f0f0f;
+  --color-bg-card: #111111;
+  --color-bg-elevated: #1a1a1a;
+  --color-bg-glass: rgba(10, 10, 10, 0.85);
+  --color-border: #262626;
+  --color-border-hover: #404040;
+  --color-border-strong: #525252;
+  --color-primary: #3b82f6;
+  --color-primary-glow: rgba(59, 130, 246, 0.15);
+  --color-secondary: #3b82f6;
+  --color-text: #e5e5e5;
+  --color-text-muted: #a3a3a3;
+  --color-text-dim: #737373;
+  --color-text-faint: #525252;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.6);
 }
 
 /* ============= 重置 ============= */
@@ -150,23 +158,24 @@ input, textarea {
 
 /* 滚动条 */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--color-bg-alt); }
+::-webkit-scrollbar-track { background: #f1f5f9; }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: #cbd5e1;
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--color-secondary); }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
 /* ============= 背景层 ============= */
 .bg-grid {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 112, 243, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 112, 243, 0.03) 1px, transparent 1px);
+    linear-gradient(#e2e8f0 1px, transparent 1px),
+    linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
   z-index: 0;
+  opacity: 0.4;
 }
 
 .bg-glow {
@@ -176,9 +185,9 @@ input, textarea {
   transform: translateX(-50%);
   width: 80vw;
   height: 80vw;
-  background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(0,112,243,0.06) 0%, transparent 60%);
   filter: blur(80px);
-  opacity: 0.4;
+  opacity: 0.5;
   pointer-events: none;
   z-index: 0;
   animation: float 20s var(--ease) infinite;
@@ -255,7 +264,7 @@ input, textarea {
 .brand-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-pink));
+  background: var(--color-primary);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
@@ -339,6 +348,7 @@ input, textarea {
   background: var(--color-primary);
   color: white;
   transform: translateY(-1px);
+  box-shadow: var(--shadow-glow);
 }
 
 /* ============= Hero 区 ============= */
@@ -370,7 +380,7 @@ input, textarea {
   left: 10%;
   width: 500px;
   height: 500px;
-  background: var(--color-primary);
+  background: rgba(0, 112, 243, 0.15);
   animation: pulse 4s var(--ease) infinite;
 }
 
@@ -379,7 +389,7 @@ input, textarea {
   right: 10%;
   width: 600px;
   height: 600px;
-  background: var(--color-pink);
+  background: rgba(236, 72, 153, 0.1);
   animation: pulse 5s var(--ease) infinite reverse;
 }
 
@@ -392,11 +402,12 @@ input, textarea {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(#e2e8f0 1px, transparent 1px),
+    linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
   background-size: 80px 80px;
   mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
   -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  opacity: 0.5;
 }
 
 .hero-content {
@@ -445,14 +456,11 @@ input, textarea {
 
 .hero-title-line {
   display: block;
-  background: linear-gradient(180deg, var(--color-text) 0%, var(--color-text-muted) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--color-text);
 }
 
 .hero-title-accent {
-  background: linear-gradient(135deg, var(--color-text) 0%, var(--color-text-muted) 50%, var(--color-secondary) 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #6366f1 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -508,7 +516,7 @@ input, textarea {
 .stat-num {
   font-family: var(--font-display);
   font-size: 2.5rem;
-  font-weight: 900;
+  font-weight: 700;
   color: var(--color-primary);
   line-height: 1;
   margin-bottom: var(--space-2);
@@ -543,14 +551,15 @@ input, textarea {
 .btn svg { width: 18px; height: 18px; }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-pink));
+  background: var(--color-primary);
   color: white;
-  box-shadow: 0 4px 20px var(--color-primary-glow);
+  box-shadow: 0 4px 20px rgba(0, 112, 243, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px var(--color-primary-glow);
+  box-shadow: 0 8px 30px rgba(0, 112, 243, 0.4);
+  background: #0051cc;
 }
 
 .btn-secondary {
@@ -592,7 +601,7 @@ input, textarea {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent, white);
+  background: linear-gradient(180deg, transparent, var(--color-primary));
   animation: scrollDown 2s var(--ease) infinite;
 }
 
@@ -631,20 +640,17 @@ input, textarea {
   letter-spacing: 0.2em;
   margin-bottom: var(--space-3);
   padding: 0.3rem 0.8rem;
-  background: rgba(0, 112, 243, 0.1);
-  border: 1px solid var(--color-border);
+  background: rgba(0, 112, 243, 0.08);
+  border: 1px solid rgba(0, 112, 243, 0.2);
   border-radius: var(--radius-sm);
 }
 
 .section-title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 900;
+  font-weight: 700;
   margin-bottom: var(--space-3);
-  background: linear-gradient(180deg, var(--color-text) 0%, var(--color-text-muted) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--color-text);
 }
 
 .section-sub {
@@ -691,7 +697,7 @@ input, textarea {
 .domain-card:hover {
   transform: translateY(-4px);
   border-color: var(--card-color, var(--color-primary));
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 .domain-card:hover::before { transform: scaleX(1); }
@@ -775,7 +781,7 @@ input, textarea {
 .feature-icon {
   width: 56px;
   height: 56px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-pink));
+  background: var(--color-primary);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
@@ -893,7 +899,7 @@ input, textarea {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(180deg, var(--color-primary), var(--color-pink), transparent);
+  background: linear-gradient(180deg, var(--color-primary), #6366f1, transparent);
 }
 
 .path-step {
@@ -907,7 +913,7 @@ input, textarea {
   flex-shrink: 0;
   width: 64px;
   height: 64px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-pink));
+  background: var(--color-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1017,8 +1023,8 @@ input, textarea {
 .search-modal-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
 }
 
 .search-modal-content {
@@ -1102,8 +1108,8 @@ input, textarea {
 }
 
 .search-result-item mark {
-  background: rgba(0, 112, 243, 0.3);
-  color: var(--color-cyan);
+  background: rgba(0, 112, 243, 0.15);
+  color: var(--color-primary);
   padding: 0 0.2em;
   border-radius: 2px;
 }
